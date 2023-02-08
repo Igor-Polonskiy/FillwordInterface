@@ -1,0 +1,156 @@
+.fillword {
+  margin: auto;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.fillword_cell {
+  width: 50px;
+  height: 50px;
+  border: 1px solid grey;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  touch-action: none;
+  color: #fff;
+  font-family: Arial;
+  font-weight: 600;
+  -webkit-text-stroke: 1.2px #434343;
+}
+
+.fillword_field {
+  display: flex;
+  flex-wrap: wrap;
+  user-select: none;
+  touch-action: none;
+}
+
+.fillword_color {
+  background-color: aqua;
+}
+
+.checkTask {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 12px !important;
+  min-height: 35px !important;
+  max-height: 35x !important;
+}
+
+.chek_answer {
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans !important;
+  font-size: 30px;
+  min-height: 35px !important;
+  max-height: 35px !important;
+}
+
+.answer_indicator {
+  padding: 0 12px;
+}
+
+.taskBtn {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans;
+  font-size: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  cursor: pointer !important;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  -webkit-box-shadow: -5px -5px 15px #ffffff, 5px 5px 15px #e9ecf4 !important;
+  box-shadow: -5px -5px 15px #ffffff, 5px 5px 15px #e9ecf4 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  background-color: #0ab7d3 !important;
+  padding: 10px !important;
+  font-size: 26px;
+  color: white !important;
+  min-width: 220px;
+  max-width: 220px;
+  min-height: 35px;
+  max-height: 35px;
+  margin: 0 !important;
+}
+
+.reloadTask {
+  display: none;
+}
+
+.reloadIconTask {
+  font-weight: bold;
+  scale: 1.5;
+}
+
+.checkIconTask {
+  scale: 1.2;
+}
+
+.taskBtn:hover {
+  -webkit-box-shadow: -2px -2px 15px #b8b7b7, 2px 2px 15px #99999b !important;
+  box-shadow: -2px -2px 15px #b8b7b7, 2px 2px 15px #99999b !important;
+}
+
+.chek_answer_wrongChoice_color {
+  background: lightpink;
+}
+
+.chek_answer_rightChoice_color {
+  background: lightgreen;
+}
+
+.noDisplay {
+  opacity: 0;
+}
+
+@media screen and (max-width: 1250px) {
+  .taskBtn {
+    min-width: 170px !important;
+    max-width: 170px !important;
+    font-size: 20px !important;
+  }
+
+  .chek_answer {
+    font-size: 22px !important;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .taskBtn {
+    min-width: 145px !important;
+    max-width: 145px !important;
+    font-size: 18px !important;
+  }
+}

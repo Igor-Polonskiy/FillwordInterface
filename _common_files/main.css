@@ -1,0 +1,73 @@
+/* СТИЛИ ДЕМОНСТРАЦИОННОГО СТЕНДА (В ПРОД НЕ ИДУТ) */
+
+/* * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+} */
+
+body {
+  /* position: relative; */
+}
+h3 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+h4 {
+  text-align: center;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  /* max-width: 1370px; */
+  /* width: 100%; */
+  margin-bottom: 50px;
+}
+
+/* .trainerTaskWrapper {
+  user-select: none;
+  max-width: 930px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+} */
+
+.comparePicturesWrapper {
+  user-select: none;
+  width: 100%;
+  /* height: 90%; */
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.trainerTaskWrapper {
+  border: 1px solid black;
+  /* padding: 5px; */
+}
+
+@media screen and (max-width: 1920px) {
+  .trainerTaskWrapper {
+    width: 840px;
+    height: 664px;
+  }
+}
+@media screen and (max-width: 1366px) {
+  .trainerTaskWrapper {
+    width: 796px;
+    height: 616px;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .trainerTaskWrapper {
+    width: 620px;
+    height: 496px;
+  }
+}
