@@ -38,17 +38,19 @@ import {
 })();*/
 
 const taskId = 'task-1'
-const size = 5;
+
 renderFillword(taskId, size)
 
 
 
-function renderFillword(taskId, size,) {
+function renderFillword(taskId,) {
+
     const taskWrapper = document.querySelector(`#${taskId}`);
 
     const gameField = taskWrapper.querySelector('.fillword_field')
-
-    const fieldSize = 50 * size
+    const select = taskWrapper.querySelector('select')
+    let size = select.value;
+    let fieldSize = 50 * size
     let isMousedown = false
     let currentCell = null
     const input = taskWrapper.querySelector('.input')
@@ -57,9 +59,22 @@ function renderFillword(taskId, size,) {
     const generate = taskWrapper.querySelector('.generate')
     const textarea = taskWrapper.querySelector('.textarea')
     let word = ''
-    let object = []
+    let object = {
+        taskId: taskId,
+        size: size,
+        function: "renderFillword",
+        data: []
+    }
 
     gameField.style.width = `${fieldSize}px`
+    select.addEventListener('change', () => {
+        size = select.value
+        object.size = size
+        fieldSize = 50 * size
+        gameField.style.width = `${fieldSize}px`
+        fillField()
+        cells = taskWrapper.querySelectorAll('.fillword_cell')
+    })
 
     addWord.addEventListener('click', (e) => {
         word = input.value
@@ -79,17 +94,17 @@ function renderFillword(taskId, size,) {
     })
 
     function deleteWord(e) {
-        
-        object.forEach((item,index) => {
-            console.log(item.word,`"${e.target.parentElement.children[0].innerText}"`)
-            if (item.word ===e.target.parentElement.children[0].innerText){
-                item.path.forEach(item=>{
-                    cells[item-1].classList.remove('fillword_color', 'fillword_buzy')
-                    cells[item-1].style.backgroundColor = ''
-                    cells[item-1].innerHTML = ''
+
+        object.data.forEach((item, index) => {
+            console.log(item.word, `"${e.target.parentElement.children[0].innerText}"`)
+            if (item.word === e.target.parentElement.children[0].innerText) {
+                item.path.forEach(item => {
+                    cells[item - 1].classList.remove('fillword_color', 'fillword_buzy')
+                    cells[item - 1].style.backgroundColor = ''
+                    cells[item - 1].innerHTML = ''
                 })
 
-                object.splice(index,1) 
+                object.data.splice(index, 1)
 
             }
         })
@@ -108,13 +123,13 @@ function renderFillword(taskId, size,) {
     btnReset.addEventListener('click', onReloadBtnClick)
 
     generate.addEventListener('click', () => {
-        console.log(object)
-        textarea.innerHTML =  JSON.stringify(object);
+        textarea.innerHTML = JSON.stringify(object);
     })
 
-   
+
 
     function fillField() {
+        gameField.innerHTML = ''
         for (let i = 0; i < (size * size); i++) {
             const cell = document.createElement('div')
             cell.classList.add('fillword_cell')
@@ -131,7 +146,7 @@ function renderFillword(taskId, size,) {
             item.innerHTML = ''
             list.innerHTML = ''
             word = ''
-            object = []
+            object.data = []
             input.value = ''
             input.disabled = false
             textarea.innerHTML = ''
@@ -197,8 +212,7 @@ function renderFillword(taskId, size,) {
                         cells[item - 1].style.backgroundColor = color
                     })
                     input.disabled = false
-                    object.push({word:`${word}`,path:[...wordCells]})
-                    console.log(object)
+                    object.data.push({ word: `${word}`, path: [...wordCells] })
                 } else {
                     gameField.addEventListener('pointerdown', onPointerdown)
                     console.log(wordCells)

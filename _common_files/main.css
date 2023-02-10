@@ -41,7 +41,6 @@ h4 {
   user-select: none;
   width: 100%;
   /* height: 90%; */
-  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -51,23 +50,4 @@ h4 {
 .trainerTaskWrapper {
   border: 1px solid black;
   /* padding: 5px; */
-}
-
-@media screen and (max-width: 1920px) {
-  .trainerTaskWrapper {
-    width: 840px;
-    height: 664px;
-  }
-}
-@media screen and (max-width: 1366px) {
-  .trainerTaskWrapper {
-    width: 796px;
-    height: 616px;
-  }
-}
-@media screen and (max-width: 1280px) {
-  .trainerTaskWrapper {
-    width: 620px;
-    height: 496px;
-  }
 }
