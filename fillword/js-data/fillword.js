@@ -1,18 +1,17 @@
 import {
     renderCheckPanel,
     getCheckPanelElements,
-    checkingAnswerPositive,
     checkingAnswerReset
 } from "../../_common_files/common_scripts.js";
 
-(() => {
+/*(() => {
     //уникальный Id тренажера
     const taskId = 'task-1'
     //size - количество клеток поля по горизонтали и вертикали
     const size = 5;
 
     const data = [
-        /*  {
+          {
               word: 'король',
               path: [1, 2, 3, 8, 13, 18]
           },
@@ -31,15 +30,20 @@ import {
           {
               word: 'конь',
               path: [4, 9, 10, 5]
-          },*/
+          },
     ]
 
     renderFillword(taskId, data, size)
 
-})();
+})();*/
+
+const taskId = 'task-1'
+const size = 5;
+renderFillword(taskId, size)
 
 
-function renderFillword(taskId, data, size, lettersData) {
+
+function renderFillword(taskId, size,) {
     const taskWrapper = document.querySelector(`#${taskId}`);
 
     const gameField = taskWrapper.querySelector('.fillword_field')
@@ -47,41 +51,53 @@ function renderFillword(taskId, data, size, lettersData) {
     const fieldSize = 50 * size
     let isMousedown = false
     let currentCell = null
-    const alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
     const input = taskWrapper.querySelector('.input')
     const list = taskWrapper.querySelector('ol')
     const addWord = taskWrapper.querySelector(".addWord")
+    const generate = taskWrapper.querySelector('.generate')
+    const textarea = taskWrapper.querySelector('.textarea')
+    let word = ''
+    let object = []
 
     gameField.style.width = `${fieldSize}px`
 
-    /*function setMinsize() {
-        let count = 0
-        data.forEach(item => {
-            count += item.word.length
-        })
-    
-        count = Math.ceil(Math.sqrt(count))
-    }
-    setMinsize()*/
     addWord.addEventListener('click', (e) => {
-        let word = input.value
+        word = input.value
 
         if (input.value) {
             let li = document.createElement('li')
-            li.innerHTML = input.value
+            li.innerHTML = `<span>${input.value}</span>`
+            let btn = document.createElement('button')
+            btn.innerHTML = "удалить"
+            btn.addEventListener('click', deleteWord)
+            li.append(btn)
             list.append(li)
             input.value = ''
             input.disabled = true
         }
-        gameField.addEventListener('pointerdown', (e) => onPointerdown(e, word))
-
-
+        gameField.addEventListener('pointerdown', onPointerdown)
     })
+
+    function deleteWord(e) {
+        
+        object.forEach((item,index) => {
+            console.log(item.word,`"${e.target.parentElement.children[0].innerText}"`)
+            if (item.word ===e.target.parentElement.children[0].innerText){
+                item.path.forEach(item=>{
+                    cells[item-1].classList.remove('fillword_color', 'fillword_buzy')
+                    cells[item-1].style.backgroundColor = ''
+                    cells[item-1].innerHTML = ''
+                })
+
+                object.splice(index,1) 
+
+            }
+        })
+        e.target.parentElement.remove()
+    }
 
     fillField()
     let cells = taskWrapper.querySelectorAll('.fillword_cell')
-
-    //lettersFill()
 
     renderCheckPanel(taskWrapper, true);
     const { btnReset, btnTest, controlsBox, infoBox } =
@@ -91,21 +107,12 @@ function renderFillword(taskId, data, size, lettersData) {
 
     btnReset.addEventListener('click', onReloadBtnClick)
 
-    function lettersFill() {
-        data.forEach(item => {
-            let letters = item.word.split('')
-            letters.forEach((letter, index) => {
-                cells[item.path[index] - 1].append(letter.toUpperCase())
-            })
+    generate.addEventListener('click', () => {
+        console.log(object)
+        textarea.innerHTML =  JSON.stringify(object);
+    })
 
-        })
-        if (lettersData) {
-            let lettersArr = lettersData.letters.split('')
-            lettersArr.forEach((letter, index) => {
-                cells[lettersData.path[index] - 1].append(letter.toUpperCase())
-            })
-        }
-    }
+   
 
     function fillField() {
         for (let i = 0; i < (size * size); i++) {
@@ -121,11 +128,18 @@ function renderFillword(taskId, data, size, lettersData) {
         cells.forEach(item => {
             item.classList.remove('fillword_color', 'fillword_buzy')
             item.style.backgroundColor = ''
+            item.innerHTML = ''
+            list.innerHTML = ''
+            word = ''
+            object = []
+            input.value = ''
+            input.disabled = false
+            textarea.innerHTML = ''
         })
     }
 
-    function onPointerdown(e, word) {
-        if (!e.target.classList.contains('buzy')) {
+    function onPointerdown(e) {
+        if (!e.target.classList.contains('fillword_buzy')) {
             let color = '#' + (Math.random().toString(16) + '000000').substring(2, 8).toUpperCase()
             let count = 0
             let wordCells = []
@@ -133,7 +147,7 @@ function renderFillword(taskId, data, size, lettersData) {
                 isMousedown = true
                 currentCell = (e.target)
                 currentCell.classList.add('color')
-                wordCells.push(currentCell.id)
+                wordCells.push(+currentCell.id)
 
             }
 
@@ -147,16 +161,16 @@ function renderFillword(taskId, data, size, lettersData) {
                     elemBelow = document.elementFromPoint(e.clientX, e.clientY);
                     if (elemBelow.classList.contains('fillword_cell')) {
                         if (currentCell !== elemBelow) {
-                            if (elemBelow.id !== wordCells.find(el => el === elemBelow.id) && !elemBelow.classList.contains('buzy')) {
+                            if (elemBelow.id !== wordCells.find(el => el === elemBelow.id) && !elemBelow.classList.contains('fillword_buzy')) {
                                 currentCell = elemBelow
                                 currentCell.classList.add('fillword_color')
-                                wordCells.push(currentCell.id)
+                                wordCells.push(+currentCell.id)
                                 currentCell.append(word[count])
                                 count++
                             }
                             else if (elemBelow.id === wordCells[wordCells.length - 2]) {
                                 currentCell.classList.remove('fillword_color')
-                                currentCell.innerHTML=''
+                                currentCell.innerHTML = ''
                                 wordCells.pop()
                                 count--
                                 currentCell = (elemBelow)
@@ -165,47 +179,34 @@ function renderFillword(taskId, data, size, lettersData) {
                             }
                         }
                     }
-                }else onMouseup()
+                } else onMouseup()
 
             }
 
             function onMouseup() {
-                let count = 0
                 isMousedown = false
                 gameField.removeEventListener('pointermove', onMousemove)
-                gameField.removeEventListener('pointerdown', (e) => onPointerdown(e, word))
-                /* data.forEach(item => {
-                     if (item.path.join('') === word.join('')) {
- 
-                         word.forEach((it) => {
-                             cells[it - 1].classList.add('fillword_buzy')
-                             cells[it - 1].style.backgroundColor = color
-                             count++
-                         })
-                     }
-                 })
-                 if (!count) {
-                     word.forEach((it) => {
-                         cells[it - 1].classList.remove('fillword_color')
-                     })
-                     word = []
-                 }
-                 gameField.removeEventListener('pointerup', onMouseup)
-                 gameField.removeEventListener('pointerleave', onMouseleave)
- 
-                 let coutBuzy = 0
-                 cells.forEach(item => {
-                     if (item.classList.contains('fillword_buzy')) {
-                         coutBuzy++
-                     }
-                 })
-                 let letters = 0
-                 data.forEach(item => {
-                     letters += item.word.length
-                 })
-                 if (coutBuzy === letters) {
-                     checkingAnswerPositive(controlsBox, infoBox)
-                 }*/
+                gameField.removeEventListener('pointerdown', onPointerdown)
+                gameField.removeEventListener('pointerup', onMouseup)
+                gameField.removeEventListener('pointerleave', onMouseleave)
+
+                if (wordCells.length === word.length) {
+                    console.log(wordCells)
+                    wordCells.forEach(item => {
+                        cells[item - 1].classList.add('fillword_buzy')
+                        cells[item - 1].style.backgroundColor = color
+                    })
+                    input.disabled = false
+                    object.push({word:`${word}`,path:[...wordCells]})
+                    console.log(object)
+                } else {
+                    gameField.addEventListener('pointerdown', onPointerdown)
+                    console.log(wordCells)
+                    wordCells.forEach(item => {
+                        cells[item - 1].classList.remove('fillword_color')
+                        cells[item - 1].innerHTML = ''
+                    })
+                }
 
             }
 
