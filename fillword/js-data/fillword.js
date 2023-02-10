@@ -61,7 +61,7 @@ function renderFillword(taskId,) {
     let word = ''
     let object = {
         taskId: taskId,
-        size: size,
+        size: +size,
         function: "renderFillword",
         data: []
     }
@@ -69,7 +69,7 @@ function renderFillword(taskId,) {
     gameField.style.width = `${fieldSize}px`
     select.addEventListener('change', () => {
         size = select.value
-        object.size = size
+        object.size = +size
         fieldSize = 50 * size
         gameField.style.width = `${fieldSize}px`
         fillField()
